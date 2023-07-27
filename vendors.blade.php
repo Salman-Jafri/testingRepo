@@ -1,0 +1,419 @@
+@extends('admin.template.app')
+
+@section('customcss')
+
+<!-- Add Custom css here -->
+<link rel="stylesheet" type="text/css" href="{{ url('admin/assets/css/vendors/datatables.css')}}">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" />
+@endsection
+@section('content')
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-title">
+              <div class="row">
+                <div class="col-md-8 col-lg-8 col-xl-8 col-xs-8 col-sm-8">
+                  <h3>Vendors</h3>
+                </div>
+
+                <!--<div class="col-4">-->
+                <!--  <ol class="breadcrumb">-->
+                <!--    <li class="breadcrumb-item"><a href="index.html">                                       -->
+                <!--        <svg class="stroke-icon">-->
+                <!--          <use href="{{ url('admin/assets/svg/icon-sprite.svg#stroke-home') }}"></use>-->
+                <!--        </svg></a></li>-->
+                <!--    <li class="breadcrumb-item">Pages</li>-->
+                <!--    <li class="breadcrumb-item active">Vendors Page</li>-->
+                <!--  </ol>-->
+                <!--</div>-->
+           </div>
+           </div>
+          </div>
+
+        <div class="card pt-3 pb-3 pl-3 card-inner">
+            <div class="row">
+              <div class="col-md-12">                    
+                <div class="form-group mb-0 me-0">                  
+                </div><a class="btn btn-primary btn-setting-1" href="#" data-bs-toggle="modal" data-bs-target="#add-modal"> 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>Add Vendors</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+
+          <div class="row">
+            <!-- Data Tables Start -->
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="display" id="dt">
+                      <thead>
+                        <tr>
+                          <th>vendor #</th>
+                          <th>Vendor Name</th>
+                          <th>Country</th>
+                          <th>Phone Code</th>
+                          <th>Contact</th>
+                          <th>Email</th>
+                          <th>VAT</th>
+                          <th>CR Number</th>
+                          <th>Account Number</th>
+                          <th>Bank Name</th>
+                          <th>Address</th>
+                          <th>Notes</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <!-- Data Tables Ends -->
+
+
+</div>
+
+          </div>
+          <!-- Container-fluid Ends-->
+
+        </div>
+@endsection
+
+@section('modal')
+
+<!-- ADD Modal -->
+
+<div class="modal fade dropdownParent" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myLargeModalLabel">Add Vendors</h4>
+          <button class="btn-close py-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body dark-modal">
+        <form id="addForm">
+            @csrf
+          <div class="row">
+
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control ifrequired" name="title" id="title" type="text" placeholder="Enter vendor name">
+                  <label class="form-label" for="vendor name">Vendor name <span class="required">*</span> :</label>
+                </div>
+          </div>
+              <div class="col-md-4 col-sm-12 col-xs-12">
+                        <select class="form-control country_id ifrequired select2" name="country_id" id="country_id">
+                            <?= getCountries() ?>
+                        </select>
+              </div>
+<div class="col-md-4 col-sm-12 col-xs-12">
+		<div class="input-group mb-3 ">
+			<div class="input-group-prepend col-md-6">
+			 <select class="form-control select2 phoneCodeDropdown" name="phonecode_id" id="phonecode_id">
+					<?= getCountryCode(); ?>
+			</select>
+			</div>
+			<div class="col-md-6">
+<div class="form-floating mb-3">
+<input class="form-control ifrequired iflenc" name="contact" id="contact" type="number" placeholder="Contact * :">
+<label class="form-label" for="contact">Contact <span class="required">*</span> :</label>
+</div>
+</div>
+		</div>
+</div>
+
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control ifrequired" name="emails" id="emails" type="text" placeholder="Enter email">
+                  <label class="form-label" for="emails">Email :</label>
+                </div>
+          </div>
+
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control ifrequired" name="vat" id="vat" type="text" placeholder="Enter vat">
+                  <label class="form-label" for="vat">vat :</label>
+                </div>
+          </div>
+
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control ifrequired" name="cr_number" id="cr_number" type="number" placeholder="Enter cr number">
+                  <label class="form-label" for="cr_number">CR Number :</label>
+                </div>
+          </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control ifrequired" name="account_number" id="account_number" type="number" placeholder="Enter contact">
+                  <label class="form-label" for="account_number">Account number :</label>
+                </div>
+          </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control ifrequired" name="branch" id="branch" type="text" placeholder="Enter bank name">
+                  <label class="form-label" for="branch">Bank name :</label>
+                </div>
+          </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control ifrequired" name="address" id="address" type="text" placeholder="Enter address">
+                  <label class="form-label" for="address">Address :</label>
+                </div>
+          </div>
+
+
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="mb-3">
+            <label class="form-label " for="notes">Notes :</label>
+            <textarea name="notes" id="notes" class="form-control ifrequired"></textarea>
+          </div>
+          </div>
+        </form>
+
+
+</div>
+<div class="modal-footer">
+<button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close <i class="icofont icofont-close-circled"></i></button>
+<button class="btn btn-primary" id="btn-add" type="button">Save <i class="icofont icofont-save"></i></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Add Modal End -->
+
+
+<!-- Edit Modal -->
+<div class="modal fade " id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myLargeModalLabel">Edit Vendors</h4>
+          <button class="btn-close py-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body dark-modal">
+        <form id="editForm">
+          <div class="row">
+              <input type="hidden" class="hid">
+            <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control ifrequired" name="title" id="e_title" type="text" placeholder="Vendor name">
+                  <label class="form-label" for="title">Vendor name <span class="required">*</span> :</label>
+                </div>
+          </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                        <select class="form-control ifrequired e_country_id select2" name="country_id" id="e_country_id">
+                            <?= getCountries() ?>
+                        </select>
+              </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+		<div class="input-group mb-3 ">
+			<div class="input-group-prepend col-md-3">
+			 <select class="form-control phonecode_id select2 phoneCodeDropdown" name="phonecode_id" id="e_phonecode_id">
+					<?= getCountryCode(); ?>
+			</select>
+			</div>
+			<div class="col-md-9">
+<div class="form-floating mb-3">
+<input class="form-control ifrequired iflenc contact_id" name="contact" id="e_contact" type="number" placeholder="Contact * :">
+<label class="form-label" for="contact">Contact <span class="required">*</span> :</label>
+</div>
+</div>
+		</div>
+</div>
+
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control" name="emails" id="e_emails" type="text" placeholder="Enter email">
+                  <label class="form-label" for="emails">Email :</label>
+                </div>
+          </div>
+        <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control " name="vat" id="e_vat" type="text" placeholder="Enter vat">
+                  <label class="form-label" for="vat">vat :</label>
+                </div>
+          </div>
+         <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control" name="cr_number" id="e_cr_number" type="number" placeholder="Enter cr number">
+                  <label class="form-label" for="cr_number">CR Number :</label>
+                </div>
+          </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control " name="account_number" id="e_account_number" type="number" placeholder="Enter contact">
+                  <label class="form-label" for="account_number">Account number :</label>
+                </div>
+          </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control " name="branch" id="e_branch" type="text" placeholder="Enter bank name">
+                  <label class="form-label" for="branch">Bank name :</label>
+                </div>
+          </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="form-floating mb-3">
+                  <input class="form-control " name="address" id="e_address" type="text" placeholder="Enter address">
+                  <label class="form-label" for="address">Address :</label>
+                </div>
+          </div>
+  
+
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="mb-3">
+            <label class="form-label" for="e_notes">Notes :</label>
+            <textarea name="notes" id="e_notes" class="form-control"></textarea>
+          </div>
+          </div>
+
+        </form>
+
+
+          </div>
+<div class="modal-footer">
+<button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close <i class="icofont icofont-close-circled"></i></button>
+<button class="btn btn-primary" type="button" id="btn-update">Update <i class="icofont icofont-save"></i></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Edit Modal End -->
+
+
+
+<!-- manage columns -->
+<div id="mycars-cols-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center">Manage Columns </h4>
+        <button type="button" class="close" data-dismiss="modal" style="color:#FFFFFF !important;">&times;</button>
+      </div>
+      <div class="modal-body">
+           <table class="table table-sm">
+              <tr>
+                <th>#</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="0">
+                </th>
+              </tr>
+              <tr>
+                <th>{Image}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="1">
+                </th>
+              </tr>
+              <tr>
+                <th>{Description}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="2">
+                </th>
+              </tr>
+              <tr>
+                <th>{VIN}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="3">
+                </th>
+              </tr>
+              <tr>
+                <th>{Price}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="4">
+                </th>
+              </tr>
+              <tr>
+                <th>{Parts}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="5">
+                </th>
+              </tr>
+              <tr>
+                <th>{Total Cost}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="6">
+                </th>
+              </tr>
+              <tr>
+                <th>{Sold}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="7">
+                </th>
+              </tr>
+              <tr>
+                <th>{Profit}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="8">
+                </th>
+              </tr>
+              <tr>
+                <th>{Paid}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="9">
+                </th>
+              </tr>
+              <tr>
+                <th>{Outstanding}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="10">
+                </th>
+              </tr>
+              <tr>
+                <th>{Selling Info}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="11">
+                </th>
+              </tr>
+              <tr>
+                <th>{Actions}</th>  
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="12">
+                </th>
+              </tr>
+              <tr>
+                <th>{Notes}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="13">
+                </th>
+              </tr>
+              <tr>
+                <th>{Status}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="14">
+                </th>
+              </tr>
+              <tr>
+                <th>{Deadline}</th>
+                <th class="text-right">
+                  <input type="checkbox" class="dt-swtch-show-hide-cols" checked data-toggle="toggle" data-size="xs" data-width="100" data-onstyle="info" data-on="Shown" data-off="Hidden" data-col="15">
+                </th>
+              </tr>
+           </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- manage columns -->
+@endsection
+
+@section('customjs')
+  <!-- Add Custom JS Here -->
+    <script src="{{ url('admin/assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ url('admin/assets/js/datatable/datatables/datatable.custom.js')}}"></script>
+<script src="{{ url('admin/assets/custom_js/vendors.js') }}"></script>
+@endsection
